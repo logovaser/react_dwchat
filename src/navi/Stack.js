@@ -2,14 +2,15 @@ import {StackNavigator} from 'react-navigation';
 import RootDrawer from "./Drawer";
 import Room from "../comp/Room";
 import * as colors from '../tools/colors'
+import * as React from "react";
+import NewDialog from "../screen/NewDialog";
 
 let routeConfigs = {
     Home: {
-        screen: RootDrawer,
+        screen: ({navigation}) => <RootDrawer screenProps={{parentNavigation: navigation}}/>,
     },
-    Room: {
-        screen: Room,
-    },
+    Room: {screen: Room},
+    NewDialog: {screen: NewDialog},
 };
 
 let settings = {
@@ -20,7 +21,7 @@ let settings = {
         headerTitleStyle: {
             color: colors.Light
         },
-        headerBackTitleStyle : {
+        headerBackTitleStyle: {
             color: colors.Light
         },
         gesturesEnabled: true,

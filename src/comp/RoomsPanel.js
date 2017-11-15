@@ -14,14 +14,15 @@ export default class RoomsPanel extends React.Component {
                 {id: 3, name: 'kek 3'},
                 {id: 4, name: 'kek 4'},
             ],
-        }
+        };
     }
 
     render() {
+        const nav = this.props.screenProps.parentNavigation;
         return (
             <View style={[styles.container]}>
                 {this.state.rooms.map(room =>
-                    <RoomsListItem key={room.id} room={room} navigation={this.props.navigation}/>
+                    <RoomsListItem key={room.id} room={room} navigation={nav}/>
                 )}
             </View>
         );

@@ -1,5 +1,6 @@
 import {DrawerNavigator} from 'react-navigation';
 import RoomsPanel from "../comp/RoomsPanel";
+import DrawerContent from "./DrawerContent";
 
 let routeConfigs = {
     RoomsPanel: {
@@ -8,7 +9,7 @@ let routeConfigs = {
 };
 
 const RootDrawer = DrawerNavigator(routeConfigs, {
-    // contentComponent: RoomsPanel
+    contentComponent: DrawerContent
 });
 
 export default RootDrawer;

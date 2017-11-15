@@ -2,7 +2,7 @@ import React from 'react';
 import {ScrollView, StyleSheet, Text, TouchableNativeFeedback, View} from 'react-native';
 import RoomsListItem from "../comp/RoomsListItem";
 
-export default class DrawerContent extends React.Component {
+export default class DrawerContentItem extends React.Component {
 
     constructor(props) {
         super(props);
@@ -10,9 +10,9 @@ export default class DrawerContent extends React.Component {
 
     render() {
         return (
-            <TouchableNativeFeedback>
+            <TouchableNativeFeedback onPress={this.props.onPress}>
                 <View style={styles.container}>
-                    New dialog
+                    <Text>{this.props.children}</Text>
                 </View>
             </TouchableNativeFeedback>
         );
