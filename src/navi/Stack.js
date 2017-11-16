@@ -4,6 +4,7 @@ import Room from "../comp/Room";
 import * as colors from '../tools/colors'
 import * as React from "react";
 import NewDialog from "../screen/NewDialog";
+import Login from "../screen/Login";
 
 let routeConfigs = {
     Home: {
@@ -11,6 +12,7 @@ let routeConfigs = {
     },
     Room: {screen: Room},
     NewDialog: {screen: NewDialog},
+    Login: {screen: Login},
 };
 
 let settings = {

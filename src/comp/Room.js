@@ -5,18 +5,22 @@ import RoomMessages from "./RoomMessages";
 
 export default class Room extends React.Component {
 
-    static navigationOptions = ({ navigation }) => ({
+    static navigationOptions = ({navigation}) => ({
         title: navigation.state.params.room.name,
     });
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            room: this.props.navigation.state.params.room,
+        };
     }
 
     render() {
         return (
             <View style={[styles.container]}>
-                <RoomMessages/>
+                <RoomMessages room={this.state.room}/>
             </View>
         );
     }

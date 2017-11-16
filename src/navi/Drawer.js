@@ -8,8 +8,7 @@ let routeConfigs = {
     }
 };
 
-const RootDrawer = DrawerNavigator(routeConfigs, {
+
+export default DrawerNavigator(routeConfigs, {
     contentComponent: DrawerContent
 });
-
-export default RootDrawer;

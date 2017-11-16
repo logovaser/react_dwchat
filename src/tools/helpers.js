@@ -5,3 +5,7 @@ export function getProp(obj, ...props) {
 
     return temp;
 }
+
+export function update(state, path, value) {
+    Object.assign(state,
+}

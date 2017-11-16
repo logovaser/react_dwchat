@@ -11,7 +11,7 @@ export default class Message extends React.Component {
     render() {
         return (
             <View style={[styles.container]}>
-                <Text>message</Text>
+                <Text>{this.props.message.text}</Text>
             </View>
         );
     }
