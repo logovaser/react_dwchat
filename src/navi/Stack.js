@@ -1,6 +1,6 @@
 import {StackNavigator} from 'react-navigation';
 import RootDrawer from "./Drawer";
-import Room from "../comp/Room";
+import Room from "../comp/Room/Room";
 import * as colors from '../tools/colors'
 import * as React from "react";
 import NewDialog from "../screen/NewDialog";
@@ -12,7 +12,6 @@ let routeConfigs = {
     },
     Room: {screen: Room},
     NewDialog: {screen: NewDialog},
-    Login: {screen: Login},
 };
 
 let settings = {

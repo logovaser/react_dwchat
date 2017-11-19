@@ -1,8 +1,8 @@
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import * as colors from "../tools/colors";
+import * as colors from "../../tools/colors";
 import Message from "./Message";
-import roomServiceClass from '../service/room'
+import roomServiceClass from '../../service/room'
 
 export default class RoomMessages extends React.Component {
 
@@ -19,7 +19,7 @@ export default class RoomMessages extends React.Component {
         this.state = {
             messages: [],
         };
-console.log(this.props);
+
         this.getMessages();
     }
 

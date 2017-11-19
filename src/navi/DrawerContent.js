@@ -1,6 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, TouchableNativeFeedback, View} from 'react-native';
-import RoomsListItem from "../comp/RoomsListItem";
+import {ScrollView, StyleSheet} from 'react-native';
 import DrawerContentItem from "./DrawerContentItem";
 
 export default class DrawerContent extends React.Component {
@@ -19,11 +18,9 @@ export default class DrawerContent extends React.Component {
                 <DrawerContentItem>Public rooms</DrawerContentItem>
                 <DrawerContentItem>Settings</DrawerContentItem>
                 <DrawerContentItem>Help</DrawerContentItem>
-                <DrawerContentItem onPress={() => nav.navigate('Login')}>Login</DrawerContentItem>
             </ScrollView>
         );
     }
 }
 
-const styles = StyleSheet.create({
-});
+const styles = StyleSheet.create({});
