@@ -13,8 +13,6 @@ export default class Login extends React.Component {
             username: '',
             password: '',
         };
-
-        console.log(this);
     }
 
     async login() {
@@ -30,10 +28,15 @@ export default class Login extends React.Component {
 
                 <TextInput style={{height: 40}}
                            placeholder="username"
+                           returnKeyType="next"
+                           onSubmitEditing={() => this.refs.passwordInput.focus()}
                            onChangeText={(text) => this.setState({username: text})}/>
                 <TextInput style={{height: 40}}
-                           placeholder="Type here to translate!"
+                           ref='passwordInput'
+                           placeholder="password"
+                           returnKeyType="go"
                            secureTextEntry={true}
+                           onSubmitEditing={() => this.login()}
                            onChangeText={(text) => this.setState({password: text})}/>
                 <Button onPress={() => this.login()}
                         title="Submit"/>
