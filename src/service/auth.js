@@ -15,24 +15,33 @@ class authService {
         Object.assign(this.e, Concert);
     }
 
-    async init() {
+    setAuthHeaders() {
+        axios.defaults.headers.common['Authorization'] = `Token ${this.token}`;
+    }
 
+    async init() {
         this.token = await AsyncStorage.getItem('token');
-        if (this.token) axios.defaults.headers.common['Authorization'] = `Token ${this.token}`;
+        if (this.token) this.setAuthHeaders();
     }
 
     isReady = this.init();
 
-    async login(username, password) {
-        let res = await this.http.post(`/api_token_auth/`, {username, password});
+    async login(form) {
+        let res = await this.http.post(`/api_token_auth/`, form);
         let token = res.data.token;
 
         if (token) {
             await AsyncStorage.setItem('token', token);
             this.token = token;
+            this.setAuthHeaders();
         }
 
         return res;
+    }
+
+    async logout() {
+        this.token = '';
+        await AsyncStorage.setItem('token', '');
     }
 }
 

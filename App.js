@@ -1,5 +1,5 @@
 import React from 'react';
-import Stack from "./src/navi/Stack";
+import {get as getAuthStack} from "./src/navi/AuthStack.js";
 import {Text} from "react-native";
 import authService from './src/service/auth'
 
@@ -16,7 +16,10 @@ export default class App extends React.Component {
     }
 
     render() {
-        if (this.state.loaded) return <Stack/>;
+        if (this.state.loaded) {
+            let AuthStack = getAuthStack();
+            return <AuthStack/>;
+        }
         else return <Text>Loading...</Text>;
     }
 }

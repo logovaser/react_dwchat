@@ -1,50 +1,70 @@
 import React from 'react';
-import {Button, ScrollView, StyleSheet, Text, TextInput} from 'react-native';
+import {Button, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import authService from '../service/auth'
+
+import Form from '../RNForms/Form'
+import {ResetTo} from "../navi/_actions";
 
 export default class Login extends React.Component {
 
-    nav = this.props.screenProps.parentNavigation;
+    nav = this.props.navigation;
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            username: '',
-            password: '',
-        };
+        this.loginForm = [
+            {
+                id: 'username',
+                options: {
+                    placeholder: 'username',
+                },
+            },
+            {
+                id: 'password',
+                options: {
+                    placeholder: 'password',
+                    secureTextEntry: true,
+                },
+            },
+        ];
     }
 
-    async login() {
-        let res = await authService.login(this.state.username, this.state.password);
-        this.nav.navigate('RoomsPanel', {room: this.props.room});
+    async login(form) {
+        try {
+            let res = await authService.login(form);
+            this.nav.dispatch(ResetTo('SignedIn'));
+        }
+        catch(err) {
+            alert(JSON.stringify(err))
+        }
     }
 
     render() {
         return (
             <ScrollView keyboardShouldPersistTaps="always"
                         style={styles.container}>
-                <Text>new dialog</Text>
 
-                <TextInput style={{height: 40}}
-                           placeholder="username"
-                           returnKeyType="next"
-                           onSubmitEditing={() => this.refs.passwordInput.focus()}
-                           onChangeText={(text) => this.setState({username: text})}/>
-                <TextInput style={{height: 40}}
-                           ref='passwordInput'
-                           placeholder="password"
-                           returnKeyType="go"
-                           secureTextEntry={true}
-                           onSubmitEditing={() => this.login()}
-                           onChangeText={(text) => this.setState({password: text})}/>
+                <Form form={this.loginForm}
+                      onSubmit={(form) => this.login(form)}/>
+
+                <View style={styles.hContainer}>
+                    <Button onPress={() => this.login()}
+                            title="Login"/>
+                </View>
+
                 <Button onPress={() => this.login()}
-                        title="Submit"/>
+                        title="Register"/>
             </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+        flex: 1,
+        padding: 20,
+    },
+    hContainer: {
+        flexDirection: 'row',
+    }
 });
