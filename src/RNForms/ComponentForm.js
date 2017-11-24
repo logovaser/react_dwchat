@@ -2,18 +2,10 @@ import React from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 
 
-export default class Form extends React.Component {
+export default class ComponentForm extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            form: {},
-        };
-    }
-
-    getData() {
-        return this.state.form;
     }
 
     getReturnKeyType(arr, i) {
@@ -35,15 +27,8 @@ export default class Form extends React.Component {
         let form = this.props.form;
         return (
             <View>
-                {form.map((input, i) =>
-                    <TextInput style={styles.input}
-                               key={input.id}
-                               ref={input.id}
-                               returnKeyType={this.getReturnKeyType(form, i)}
-                               onChangeText={(text) => this.state.form[input.id] = text}
-                               onSubmitEditing={() => this.onSubmitEditing(form, i)}
-                               {...input.options}
-                    />
+                {form.map((Component, i) =>
+                    <Component/>
                 )}
             </View>
         );
