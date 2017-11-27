@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
+import * as styles from "../@styles";
 
 
 export default class Form extends React.Component {
@@ -36,7 +37,7 @@ export default class Form extends React.Component {
         return (
             <View>
                 {form.map((input, i) =>
-                    <TextInput style={styles.input}
+                    <TextInput style={s.input}
                                key={input.id}
                                ref={input.id}
                                returnKeyType={this.getReturnKeyType(form, i)}
@@ -51,8 +52,6 @@ export default class Form extends React.Component {
 }
 
 
-const styles = StyleSheet.create({
-    input: {
-        fontSize: 18,
-    }
+const s = StyleSheet.create({
+    input: styles.input,
 });

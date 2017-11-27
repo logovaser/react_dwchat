@@ -1,17 +1,14 @@
-import {StyleSheet} from 'react-native';
-
-
-export const container = StyleSheet.create({
+export const container = {
     flex: 1,
-});
+};
 
-export const horizontalContainer = StyleSheet.create({
+export const horizontalContainer = {
     flexDirection: 'row',
-});
+};
 
-export const input = StyleSheet.create({
+export const input = {
     fontSize: 18,
-});
+};
 
 export function spacing(conf, multiplier = 1) {
     let res = {};
@@ -31,5 +28,5 @@ export function spacing(conf, multiplier = 1) {
     else if (conf[1] === 'y') res[propertyName + 'Vertical'] = spacing;
     else return console.warn('Invalid spacing sides');
 
-    return StyleSheet.create(res);
+    return res;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, ScrollView, View} from 'react-native';
+import {Button, ScrollView, StyleSheet, View} from 'react-native';
 import authService from '../service/auth'
 
 import Form from '../RNForms/Form'
@@ -40,7 +40,7 @@ export default class Login extends React.Component {
         let {navigate} = this.nav;
 
         return (
-            <ScrollView style={[styles.container, styles.spacing('p')]}>
+            <ScrollView style={[s.container, s.padding]}>
 
                 <Form ref='form'
                       form={_form}
@@ -57,3 +57,8 @@ export default class Login extends React.Component {
         );
     }
 }
+
+const s = StyleSheet.create({
+    container: styles.container,
+    padding: styles.spacing('p'),
+});
