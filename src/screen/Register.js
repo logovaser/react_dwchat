@@ -1,8 +1,9 @@
 import React from 'react';
-import {Button, CheckBox, ScrollView, Switch, TextInput} from 'react-native';
+import {Animated, Button, CheckBox, ScrollView, Switch, TextInput, View} from 'react-native';
 
 import * as styles from "../@styles";
 import ComponentForm from "../RNForms/ComponentForm";
+import DwText from "../comp/DwText";
 
 
 const compForm = [
@@ -18,9 +19,13 @@ const compForm = [
     <TextInput id='password_repeat'
                placeholder='repeat password'
                secureTextEntry={true}/>,
-    <CheckBox id='agree1' value={false} label='kek'/>,
-    <Switch id='agree2' label='kek switch' value={true}/>,
+    <CheckBox id='agree1' label='kek'/>,
+    <Switch id='agree2' label='kek switch'/>,
 ];
+
+const HEADER_MAX_HEIGHT = 200;
+const HEADER_MIN_HEIGHT = 60;
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 export default class Register extends React.Component {
 
@@ -28,32 +33,69 @@ export default class Register extends React.Component {
         super(props);
 
         this.state = {
-            trueSwitchIsOn: true,
-            falseSwitchIsOn: false,
+            scrollY: new Animated.Value(0),
         };
+    }
+
+    handleScroll(e) {
+        this.setState({scroll: e.nativeEvent.contentOffset.y});
+    }
+
+    calcJumboHeight() {
+        return Math.max(20, 200 - this.state.scroll);
     }
 
     async submit() {
         alert(JSON.stringify(this.$form.getData()));
-        // await authService.login(this.refs.form.getData());
-        // this.nav.dispatch(ResetTo('SignedIn'));
     }
 
     render() {
-        return (
-            <ScrollView style={[styles.container, styles.spacing('p')]}>
-                <ComponentForm ref={(elem) => this.$form = elem}
-                               form={compForm}
-                               onSubmit={() => this.submit()}/>
+        const headerHeight = this.state.scrollY.interpolate({
+            inputRange: [0, HEADER_SCROLL_DISTANCE],
+            outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
+            extrapolate: 'clamp',
+        });
 
-                <Switch
-                    onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-                    style={{marginBottom: 10}}
-                    value={this.state.falseSwitchIsOn} />
+        return (<View style={styles.container}>
+            <Animated.View style={{
+                height: headerHeight,
+                position: 'absolute',
+                top: 0, left: 0, right: 0, bottom: 0,
+                backgroundColor: '#48e',
+                zIndex: 10,
+            }}>
+            </Animated.View>
+            <ScrollView style={[styles.container, styles.substrate]}
+                        scrollEventThrottle={16}
+                        onScroll={Animated.event(
+                            [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
+                        )}>
+                <View style={styles.section}>
+                    <DwText style={styles.sectionLabel}>
+                        Registration page
+                    </DwText>
+                    <View style={styles.basePadding}>
+                        <DwText>
+                            Some button
+                        </DwText>
+                        <DwText style={styles.hintText}>
+                            enter some data about yourself
+                        </DwText>
+                    </View>
 
-                <Button onPress={() => this.submit()}
-                        title="Register"/>
+                    <ComponentForm style={styles.formGroup}
+                                   ref={(elem) => this.$form = elem}
+                                   form={compForm}
+                                   onSubmit={() => this.submit()}/>
+                </View>
+
+                <View style={styles.section}>
+                    <View style={styles.formGroup}>
+                        <Button onPress={() => this.submit()}
+                                title="Register"/>
+                    </View>
+                </View>
             </ScrollView>
-        );
+        </View>);
     }
 }

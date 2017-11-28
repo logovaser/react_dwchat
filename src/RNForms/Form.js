@@ -53,5 +53,5 @@ export default class Form extends React.Component {
 
 
 const s = StyleSheet.create({
-    input: styles.input,
+    input: styles.font,
 });

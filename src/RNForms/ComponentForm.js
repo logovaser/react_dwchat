@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {TextInput, View} from 'react-native';
 import * as styles from "../@styles";
+import DwText from "../comp/DwText";
 
 
 export default class ComponentForm extends React.Component {
@@ -32,9 +33,10 @@ export default class ComponentForm extends React.Component {
         }
     }
 
+
     makeAdditionalProps(form, i, component) {
         const {id} = component.props;
-        const {displayName} = component.type.displayName;
+        const {displayName} = component.type;
 
         let newProps = {
             ref: (elem) => this.inputs[id] = elem,
@@ -47,22 +49,24 @@ export default class ComponentForm extends React.Component {
         }
         else {
             newProps.value = this.state[id];
-            newProps.onValueChange = (value) => {
-                alert(`switch changed to: ${value}`);
-                this.setState({[id]: value});
-            }
+            newProps.onValueChange = (value) => this.setState({[id]: value});
         }
 
         return newProps;
     }
 
     makeAdditionalLayout(component) {
-        const {displayName} = component.type.displayName;
+        const {displayName} = component.type;
 
-
-        if (displayName === 'CheckBox' || displayName === 'Switch') {
+        if (displayName === 'CheckBox') {
             return <View style={styles.horizontalContainer}>
-                <Text style={styles.container}>{component.props.label}</Text>
+                {component}
+                <DwText style={styles.container}>{component.props.label}</DwText>
+            </View>
+        }
+        else if (displayName === 'Switch') {
+            return <View style={styles.horizontalContainer}>
+                <DwText style={styles.container}>{component.props.label}</DwText>
                 {component}
             </View>
         }
@@ -74,7 +78,7 @@ export default class ComponentForm extends React.Component {
     render() {
         let form = this.props.form;
         return (
-            <View>
+            <View style={this.props.style}>
                 {form.map((component, i) => {
                     const {id} = component.props;
 
