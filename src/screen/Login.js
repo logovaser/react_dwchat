@@ -53,6 +53,8 @@ export default class Login extends React.Component {
 
                 <Button onPress={() => navigate('Register')}
                         title="Register"/>
+                <Button onPress={() => navigate('Profile')}
+                        title="Profile"/>
             </ScrollView>
         );
     }

@@ -35,14 +35,19 @@ export default class ComponentForm extends React.Component {
 
 
     makeAdditionalProps(form, i, component) {
-        const {id} = component.props;
+        const {id, style} = component.props;
         const {displayName} = component.type;
 
         let newProps = {
             ref: (elem) => this.inputs[id] = elem,
+            // style: {
+            //     ...style,
+            //     ...styles.font,
+            //     paddingHorizontal: 0,
+            // }
         };
 
-        if (displayName === 'TextInput') {
+        if (displayName === 'TextInput' || component.props.type === 'text') {
             newProps.onChangeText = (value) => this.setState({[id]: value});
             newProps.returnKeyType = this.getReturnKeyType(form, i);
             newProps.onSubmitEditing = () => this.onSubmitEditing(form, i);

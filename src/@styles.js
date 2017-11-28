@@ -43,8 +43,7 @@ export const section = {
     ...spacing('mb', .75),
 
     backgroundColor: colors.Light,
-    borderBottomWidth: .5,
-    borderColor: colors.DarkGray,
+    elevation: 2,
 };
 
 export const sectionLabel = {
