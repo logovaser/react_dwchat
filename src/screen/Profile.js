@@ -1,65 +1,86 @@
 import React from 'react';
-import {Animated, ScrollView, StyleSheet, View} from 'react-native';
+import {Animated, Button, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 import * as styles from "../@styles";
-import * as colors from "../tools/colors";
+import AnimatedHeaderScrollView from 'react-native-animated-header-scroll-view'
 import DwText from "../comp/DwText";
+import Icon from "react-native-vector-icons/Ionicons";
+import CircleButton from "../comp/CircleButton";
 
 
-const HEADER_MAX_HEIGHT = 160;
-const HEADER_MIN_HEIGHT = 60;
-const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
 export default class Profile extends React.Component {
 
+    data = {};
+    state = {
+        controlsOpacity: 1,
+    };
+
     constructor(props) {
         super(props);
+    }
 
-        this.state = {
-            scrollY: new Animated.Value(0),
-        };
+    getScroll() {
+        if (this.data.scrollY || !this.$scrollView) return;
+        let elem = this.$scrollView;
+        let conf = elem.getConfig();
+        this.data.scrollY = elem.getScroll();
+
+        this.setState({
+            controlsOpacity: this.data.scrollY.interpolate({
+                inputRange: [0, conf.headerScrollDistance],
+                outputRange: [1, 0],
+                extrapolate: 'clamp',
+            })
+        });
     }
 
     render() {
-        const headerHeight = this.state.scrollY.interpolate({
-            inputRange: [0, HEADER_SCROLL_DISTANCE],
-            outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-            extrapolate: 'clamp',
-        });
+        let headerChildren = <Animated.View>
+            <DwText>keke</DwText>
+        </Animated.View>;
+        let rootChildren = <Animated.View style={[
+            _styles.headerControls,
+            {opacity: this.state.controlsOpacity}
+        ]}>
+            <CircleButton>
+                <Icon name="md-create"/>
+            </CircleButton>
+        </Animated.View>;
 
-        return (<View style={styles.container}>
-            <ScrollView style={[styles.container, styles.substrate]}
-                        scrollEventThrottle={1}
-                        onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.state.scrollY}}}])}>
-                <View style={{height: HEADER_MAX_HEIGHT}}/>
-                <View style={styles.section}>
-                    <DwText style={styles.sectionLabel}>
-                        Registration page
-                    </DwText>
-                    {[1,1,1,1,1,1,1,1,1,1,1,1,1].map(() =>
-                        <View style={styles.formGroup}>
-                            <DwText>
-                                Some button
-                            </DwText>
-                            <DwText style={styles.hintText}>
-                                enter some data about yourself
-                            </DwText>
-                        </View>
-                    )}
-                </View>
-            </ScrollView>
-            <Animated.View style={[_styles.resizingHeader, {height: headerHeight}]}>
-            </Animated.View>
-        </View>);
+        return (<AnimatedHeaderScrollView style={_styles.container}
+                                          ref={elem => {
+                                              this.$scrollView = elem;
+                                              this.getScroll();
+                                          }}
+                                          headerChildren={headerChildren}
+                                          rootChildren={rootChildren}>
+            <View style={_styles.section}>
+                <DwText style={_styles.sectionLabel}>
+                    Registration page
+                </DwText>
+                {arr.map(num =>
+                    <View key={num} style={_styles.formGroup}>
+                        <DwText>Some button</DwText>
+                        <DwText style={[_styles.hintText]}>
+                            enter some data about yourself
+                        </DwText>
+                    </View>
+                )}
+            </View>
+        </AnimatedHeaderScrollView>);
     }
 }
 
 const _styles = StyleSheet.create({
-    resizingHeader: {
-        position: 'absolute',
-        top: 0, left: 0, right: 0, bottom: 0,
-
-        backgroundColor: '#48e',
-        elevation: 10,
-    }
+    container: styles.container,
+    section: styles.section,
+    sectionLabel: styles.sectionLabel,
+    formGroup: styles.formGroup,
+    hintText: styles.hintText,
+    headerControls: {
+        ...styles.spacing('px'),
+        alignItems: 'flex-end',
+    },
 });

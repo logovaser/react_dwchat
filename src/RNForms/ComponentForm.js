@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, View} from 'react-native';
+import {TextInput, StyleSheet, View} from 'react-native';
 import * as styles from "../@styles";
 import DwText from "../comp/DwText";
 
@@ -40,11 +40,6 @@ export default class ComponentForm extends React.Component {
 
         let newProps = {
             ref: (elem) => this.inputs[id] = elem,
-            // style: {
-            //     ...style,
-            //     ...styles.font,
-            //     paddingHorizontal: 0,
-            // }
         };
 
         if (displayName === 'TextInput' || component.props.type === 'text') {
@@ -64,14 +59,14 @@ export default class ComponentForm extends React.Component {
         const {displayName} = component.type;
 
         if (displayName === 'CheckBox') {
-            return <View style={styles.horizontalContainer}>
+            return <View style={_styles.horizontalContainer}>
                 {component}
-                <DwText style={styles.container}>{component.props.label}</DwText>
+                <DwText style={_styles.container}>{component.props.label}</DwText>
             </View>
         }
         else if (displayName === 'Switch') {
-            return <View style={styles.horizontalContainer}>
-                <DwText style={styles.container}>{component.props.label}</DwText>
+            return <View style={_styles.horizontalContainer}>
+                <DwText style={_styles.container}>{component.props.label}</DwText>
                 {component}
             </View>
         }
@@ -96,3 +91,8 @@ export default class ComponentForm extends React.Component {
         );
     }
 }
+
+const _styles = StyleSheet.create({
+    container: styles.container,
+    horizontalContainer: styles.horizontalContainer,
+});

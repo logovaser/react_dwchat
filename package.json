@@ -24,6 +24,7 @@
     "react-native": "^0.49.5",
     "react-native-material-textfield": "^0.10.3",
     "react-native-vector-icons": "^4.4.2",
-    "react-navigation": "^1.0.0-beta.19"
+    "react-navigation": "^1.0.0-beta.19",
+    "react-native-animated-header-scroll-view": "../my_modules/AnimatedHeaderScrollView"
   }
 }
