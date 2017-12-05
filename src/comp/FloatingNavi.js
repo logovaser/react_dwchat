@@ -2,6 +2,9 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
 import {NavigationActions} from 'react-navigation'
+import Menu from "./Menu/Modal";
+import BasicItem from "./ListItems/BasicItem";
+import DwText from "./DwText";
 
 
 const COLOR = '#fff';
@@ -41,10 +44,15 @@ export default class FloatingNavi extends React.Component {
                       style={[styles.icon, this.styles.defaultColor]}/>
             </TouchableOpacity>
             {heading}
-            <TouchableOpacity style={[styles.iconWrapper, {width: this.conf.size}]}>
+            <TouchableOpacity style={[styles.iconWrapper, {width: this.conf.size}]}
+                              onPress={() => this.$menu.show()}>
                 <Icon name="md-more"
                       style={[styles.icon, this.styles.defaultColor]}/>
             </TouchableOpacity>
+            <Menu ref={elem => this.$menu = elem}>
+                <BasicItem>kek</BasicItem>
+                <BasicItem>lol</BasicItem>
+            </Menu>
         </View>);
     }
 }
