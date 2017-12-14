@@ -14,24 +14,37 @@ export const font = {
     fontSize: 18,
 };
 
+const spacingTypeMap = {
+    m: 'margin',
+    p: 'padding',
+};
+
+const spacingSidesMap = {
+    t: 'Top',
+    b: 'Bottom',
+    l: 'Left',
+    r: 'Right',
+    x: 'Horizontal',
+    y: 'Vertical',
+};
+
+const spacingConf = {
+    spacing: 18,
+};
+
 export function spacing(conf, multiplier = 1) {
     let res = {};
-    let propertyName;
-    let spacing = 18 * multiplier;
+    let spacing = spacingConf.spacing * multiplier;
 
-    if (conf[0] === 'm') propertyName = 'margin';
-    else if (conf[0] === 'p') propertyName = 'padding';
-    else return console.warn('No property');
+    let propertyName = spacingTypeMap[conf[0]];
+    if (!propertyName) return console.warn('No property');
 
     if (!conf[1]) res[propertyName] = spacing;
-    else if (conf[1] === 't') res[propertyName + 'Top'] = spacing;
-    else if (conf[1] === 'b') res[propertyName + 'Bottom'] = spacing;
-    else if (conf[1] === 'l') res[propertyName + 'Left'] = spacing;
-    else if (conf[1] === 'r') res[propertyName + 'Right'] = spacing;
-    else if (conf[1] === 'x') res[propertyName + 'Horizontal'] = spacing;
-    else if (conf[1] === 'y') res[propertyName + 'Vertical'] = spacing;
-    else return console.warn('Invalid spacing sides');
-
+    else {
+        let side = spacingSidesMap[conf[1]];
+        if (side) res[propertyName + side] = spacing;
+        else return console.warn('Invalid spacing sides');
+    }
     return res;
 }
 
@@ -61,11 +74,14 @@ export const basePadding = {
     ...spacing('py', .5),
 };
 
-export const formGroup = {
-    ...basePadding,
-
+export const bottomBorder = {
     borderBottomWidth: 0.5,
     borderColor: colors.Gray,
+};
+
+export const formGroup = {
+    ...basePadding,
+    ...bottomBorder,
 };
 
 export const hintText = {

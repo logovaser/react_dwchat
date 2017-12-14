@@ -1,21 +1,22 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
+import * as styles from '../../@styles'
+
 
 export default class BasicItem extends React.Component {
 
-    render() {
-        return (<TouchableOpacity style={styles.item}>
-            <Text style={styles.text}>{this.props.children}</Text>
-        </TouchableOpacity>);
-    }
+    render = () => <TouchableOpacity style={s.item} {...this.props}>
+        <Text style={s.text}>
+            {this.props.children}
+        </Text>
+    </TouchableOpacity>;
 }
 
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
     item: {
-        paddingHorizontal: 18,
-        paddingVertical: 10,
+        ...styles.basePadding,
     },
     text: {
         fontSize: 18,

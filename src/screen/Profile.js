@@ -9,6 +9,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import CircleButton from "../comp/CircleButton";
 import Avatar from "../comp/Avatar";
 import FloatingNavi from "../comp/FloatingNavi";
+import SwitchItem from "../comp/ListItems/SwitchItem";
 
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
@@ -82,6 +83,12 @@ export default class Profile extends React.Component {
                     <DwText style={_styles.sectionLabel}>
                         Registration page
                     </DwText>
+                    <SwitchItem>
+                        <DwText>Some button</DwText>
+                        <DwText style={[_styles.hintText]}>
+                            enter some data about yourself
+                        </DwText>
+                    </SwitchItem>
                     {arr.map(num =>
                         <View key={num} style={_styles.formGroup}>
                             <DwText>Some button</DwText>

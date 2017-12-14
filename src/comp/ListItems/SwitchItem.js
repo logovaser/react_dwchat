@@ -1,22 +1,43 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Switch, TouchableNativeFeedback, View} from 'react-native';
+
+import * as styles from '../../@styles'
 
 
-export default class ItemSwitch extends React.Component {
+export default class SwitchItem extends React.Component {
 
-    constructor(props) {
-        super(props);
+    state = {
+        value: false,
+    };
+
+    componentWillUpdate() {
+
     }
 
-    render() {
-        return (<View>
-            {this.props.children}
-
-            </View>);
-    }
+    render = () => <TouchableNativeFeedback onPress={() => this.setState({value: !this.state.value})}>
+        <View style={s.button}>
+            <View style={[s.wrapper, s.label]}>
+                {this.props.children}
+            </View>
+            <View style={s.wrapper}>
+                <Switch value={this.state.value} onValueChange={value => this.setState({value})}/>
+            </View>
+        </View>
+    </TouchableNativeFeedback>;
 }
 
 
 const s = StyleSheet.create({
+    button: {
+        ...styles.bottomBorder,
 
+        flexDirection: 'row',
+    },
+    wrapper: {
+        ...styles.basePadding,
+        justifyContent: 'center',
+    },
+    label: {
+        flex: 1,
+    },
 });
